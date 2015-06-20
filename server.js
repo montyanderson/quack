@@ -58,7 +58,7 @@ io.on("connection", function(socket) {
     });
 
     socket.on("message", function(text) {
-        if(username !== false && text.length < 51) {
+        if(username !== false && text.length < 51 && text.trim() !== "") {
             io.emit("message", {
                 from: username,
                 text: text
