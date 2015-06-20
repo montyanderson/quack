@@ -1,0 +1,64 @@
+@import url(http://fonts.googleapis.com/css?family=Ubuntu);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Ubuntu", Arial;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+nav {
+    background-color: #e74c3c;
+    padding: 1em 5em;
+    margin-bottom: 2em;
+
+    h1 {
+        color: #f1c40f;
+    }
+}
+
+.login {
+    text-decoration: none;
+    color: black;
+    font-size: 4em;
+}
+
+.page-login {
+    text-align: center;
+}
+
+.page-main {
+    text-align: center;
+
+    h1 {
+        text-align: center;
+    }
+
+    #chat {
+        width: 80%;
+        display: inline-block;
+        text-align: left;
+
+        height: 30em;
+        overflow-x: auto;
+        overflow-y: scroll;
+
+        .message {
+            display: block;
+        }
+
+        .from {
+            font-weight: 900;
+        }
+    }
+
+    input {
+        width: 80%;
+    }
+}

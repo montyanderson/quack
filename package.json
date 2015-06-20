@@ -1,0 +1,26 @@
+{
+  "name": "quack",
+  "version": "0.0.0",
+  "description": "quack, the open source messaging system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/montyanderson/quack.git"
+  },
+  "author": "Monty Anderson <monty.linux@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/montyanderson/quack/issues"
+  },
+  "homepage": "https://github.com/montyanderson/quack#readme",
+  "dependencies": {
+    "express": "^4.12.4",
+    "less": "^2.5.1",
+    "request": "^2.58.0",
+    "socket.io": "^1.3.5"
+  }
+}
