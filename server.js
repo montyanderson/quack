@@ -43,14 +43,17 @@ io.on("connection", function(socket) {
                 grant_type: "authorization_code"
             }},
         function(err, httpResponse, body) {
-            if(body && JSON.parse(body).user != undefined) {
+            if(body && JSON.parse(body).user !== undefined) {
                 var response = JSON.parse(body);
 
                 access_token = response.access_token;
                 username = response.user.username;
                 socket.emit("login", username);
 
-                console.log(username);
+                io.emit("message", {
+                    from: username,
+                    text: "joined"
+                });
             } else {
                 socket.emit("err", "Error! Failed to login!");
             }
