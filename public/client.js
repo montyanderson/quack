@@ -25,7 +25,13 @@ function parse(val) {
 }
 
 if(parse("code")) {
-    var socket = io(location.origin);
+    if(location.origin == "http://quack.montyanderson.net") {
+        var socket = io("http://quack.montyanderson.net:8000");
+    } else {
+        var socket = io(location.origin);
+    }
+
+
 
     socket.emit("code", {
         code: parse("code"),
