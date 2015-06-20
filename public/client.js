@@ -31,8 +31,6 @@ if(parse("code")) {
         var socket = io(location.origin);
     }
 
-
-
     socket.emit("code", {
         code: parse("code"),
         redirect_uri: location.origin
@@ -52,6 +50,8 @@ if(parse("code")) {
     socket.on("message", function(data) {
         $("#chat").append(
 "<span class='message'><span class='from'>" + data.from + "</span>: " + data.text + "</span>");
+
+    $("#chat").scrollTop($("#chat")[0].scrollHeight);
     });
 
     $(".text").keypress(function(event) {
