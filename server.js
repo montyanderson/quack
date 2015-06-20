@@ -68,4 +68,7 @@ io.on("connection", function(socket) {
 
 });
 
-server.listen(8080);
+var ip = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP || "";
+var port = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT || process.argv[2] || 8080;
+
+server.listen(port, ip);
