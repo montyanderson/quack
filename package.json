@@ -1,6 +1,7 @@
 {
   "name": "quack",
   "version": "0.0.0",
+  "private": true,
   "description": "quack, the open source messaging system",
   "main": "server.js",
   "scripts": {
