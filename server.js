@@ -8,8 +8,16 @@ var fs = require("fs"),
 
 var app = express();
 
+app.staticFile = function(query, path) {
+    app.get(query, function(req, res) {
+        res.sendFile(path);
+    });
+};
+
 app.use(express.static("public"));
-app.use(express.static("node_modules/jquery/dist"));
+
+app.staticFile("/jquery.js", require.resolve("jquery"));
+app.staticFile("/mustache.js", require.resolve("mustache"));
 
 app.get("/style.css", function(req, res) {
     fs.readFile(__dirname + "/public/style.less", function(err, data) {
