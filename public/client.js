@@ -65,6 +65,10 @@ if(parse("code")) {
         $("#chat").scrollTop($("#chat")[0].scrollHeight);
     });
 
+    socket.on("users", function(users) {
+        $(".users").text(users.join(", "));
+    });
+
     $(".text").keypress(function(event) {
         if ( event.which == 13 ) {
             var text = $(".text").val();

@@ -1,6 +1,8 @@
 module.exports = function(io, client_id, client_secret) {
     var request = require("request");
 
+    var users = [];
+
     io.on("connection", function(socket) {
         var access_token = false;
         var username = false;
@@ -21,6 +23,10 @@ module.exports = function(io, client_id, client_secret) {
 
                     access_token = response.access_token;
                     username = response.user.username;
+
+                    users.push(username);
+                    io.emit("users", users);
+
                     socket.emit("login", username);
 
                     io.emit("message", {
@@ -40,6 +46,12 @@ module.exports = function(io, client_id, client_secret) {
                     text: text
                 });
             }
+        });
+
+        socket.on("disconnect", function() {
+            var index = users.indexOf(username);
+            users.splice(index, 1);
+            io.emit("users", users);
         });
 
     });

@@ -21,6 +21,7 @@
 
         <section class="page page-main">
             <h1>Hello, <span class="username"></span>!</h1>
+            <h2 class="users"></h2>
 
             <div id="chat"></div>
 
