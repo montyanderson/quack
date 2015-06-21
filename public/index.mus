@@ -8,21 +8,6 @@
 
         <link href="style.css" rel="stylesheet" />
 
-        <script id="template-message" type="template">
-            <span class="message">
-                <span class="from">[[user]]</span>:
-                [[#greentext]]
-                <span class="greentext">
-                [[/greentext]]
-
-                [[text]]
-
-                [[#greentext]]
-                </span>
-                [[/greentext]]
-            </span>
-        </script>
-
     </head>
     <body>
 
