@@ -28,6 +28,7 @@ app.get("/style.css", function(req, res) {
 app.get("/", function(req, res) {
     fs.readFile("public/index.mus", function(err, data) {
         if(!err) {
+            res.header("Content-Type", "text/html");
             res.write(Mustache.render(data.toString(), {
                 client_id: client_id,
                 socketsPort: socketsPort,
