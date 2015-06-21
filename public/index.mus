@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-client-id="{{client_id}}" data-socket="{{socketsPort}}" data-port="{{port}}">
     <head>
 
         <meta charset="utf-8" />
@@ -7,6 +7,21 @@
         <title>quack</title>
 
         <link href="style.css" rel="stylesheet" />
+
+        <script id="template-message" type="template">
+            <span class="message">
+                <span class="from">[[user]]</span>:
+                [[#greentext]]
+                <span class="greentext">
+                [[/greentext]]
+
+                [[text]]
+
+                [[#greentext]]
+                </span>
+                [[/greentext]]
+            </span>
+        </script>
 
     </head>
     <body>
@@ -22,14 +37,13 @@
         <section class="page page-main">
             <h1>Hello, <span class="username"></span>!</h1>
 
-            <div id="chat">
-
-            </div>
+            <div id="chat"></div>
 
             <input class="text" maxlength="50" />
         </section>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="jquery.min.js"></script>
+        <script src="mustache.min.js"></script>
         <script src="socket.io/socket.io.js"></script>
         <script src="client.js"></script>
 

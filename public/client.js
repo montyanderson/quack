@@ -1,7 +1,7 @@
 var client_id = "04c3c180923f43fda166d1ba8dcc2941";
 
 $(".login").attr("href", "https://api.instagram.com/oauth/authorize/?client_id=" +
-client_id + "&redirect_uri=" + location.origin + "&response_type=code");
+$("html").attr("data-client-id") + "&redirect_uri=" + location.origin + "&response_type=code");
 
 $(".page").hide();
 
@@ -25,11 +25,8 @@ function parse(val) {
 }
 
 if(parse("code")) {
-    if(location.origin == "http://quack.montyanderson.net") {
-        var socket = io("http://quack.montyanderson.net:8000");
-    } else {
-        var socket = io(location.origin);
-    }
+    var wsURL = location.origin.split(":" + $("html").data("port"))[0] + ":" + $("html").data("socket");
+    var socket = io(wsURL);
 
     socket.emit("code", {
         code: parse("code"),
@@ -48,10 +45,21 @@ if(parse("code")) {
     });
 
     socket.on("message", function(data) {
-        $("#chat").append(
-"<span class='message'><span class='from'>" + data.from + "</span>: " + data.text + "</span>");
+        console.log(data);
+        var template = $("#template-message").html();
 
-    $("#chat").scrollTop($("#chat")[0].scrollHeight);
+        for(var i = 0; i < template.split("[[").length; i++) {
+            template = template.replace("[[", "{{").replace("]]", "}}");
+            template = template.replace("[[", "{{").replace("]]", "}}");
+        }
+
+        if(data.text.substr(0, 1) == ">") {
+            data.greentext = true;
+            console.log("greentext");
+        }
+
+        $("#chat").append(Mustache.render(template, data));
+        $("#chat").scrollTop($("#chat")[0].scrollHeight);
     });
 
     $(".text").keypress(function(event) {

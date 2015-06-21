@@ -3,16 +3,19 @@ var fs = require("fs"),
     less = require("less"),
     express = require("express"),
     request = require("request"),
+    Mustache = require("mustache"),
     socketio = require("socket.io");
 
 var app = express();
 
 app.use(express.static("public"));
+app.use(express.static("node_modules/jquery/dist"));
 
 app.get("/style.css", function(req, res) {
     fs.readFile(__dirname + "/public/style.less", function(err, data) {
 
         less.render(data.toString()).then(function(output) {
+            res.header("Content-Type", "text/css");
             res.write(output.css);
             res.end();
         }, function(error) {
@@ -22,56 +25,44 @@ app.get("/style.css", function(req, res) {
     });
 });
 
+app.get("/", function(req, res) {
+    fs.readFile("public/index.mus", function(err, data) {
+        if(!err) {
+            res.write(Mustache.render(data.toString(), {
+                client_id: client_id,
+                socketsPort: socketsPort,
+                port: port
+            }));
+
+            res.end();
+        }
+    });
+});
+
 var server = http.createServer(app);
 var io = socketio(server);
 
-var client_id = "04c3c180923f43fda166d1ba8dcc2941";
-var client_secret = process.env.CLIENT_SECRET;
+if(fs.existsSync(".client_id") === true) {
+    var client_id = fs.readFileSync(".client_id").toString().trim();
+} else {
+    var client_id = process.env.CLIENT_ID;
+}
 
-io.on("connection", function(socket) {
-    var access_token = false;
-    var username = false;
+if(fs.existsSync(".client_secret") === true) {
+    var client_secret = fs.readFileSync(".client_secret").toString().trim();
+} else {
+    var client_secret = process.env.CLIENT_SECRET;
+}
 
-    socket.on("code", function(data) {
-        request.post({
-            url:'https://api.instagram.com/oauth/access_token',
-            form: {
-                client_id: client_id,
-                client_secret: client_secret,
-                code: data.code,
-                redirect_uri: data.redirect_uri,
-                grant_type: "authorization_code"
-            }},
-        function(err, httpResponse, body) {
-            if(body && JSON.parse(body).user !== undefined) {
-                var response = JSON.parse(body);
-
-                access_token = response.access_token;
-                username = response.user.username;
-                socket.emit("login", username);
-
-                io.emit("message", {
-                    from: username,
-                    text: "joined"
-                });
-            } else {
-                socket.emit("err", "Error! Failed to login!");
-            }
-        });
-    });
-
-    socket.on("message", function(text) {
-        if(username !== false && text.length < 51 && text.trim() !== "") {
-            io.emit("message", {
-                from: username,
-                text: text
-            });
-        }
-    });
-
-});
+require("./sockets.js")(io, client_id, client_secret);
 
 var ip = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP || "";
 var port = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT || process.argv[2] || 8080;
+
+if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT) {
+    var socketsPort = 8000;
+} else {
+    var socketsPort = port;
+}
 
 server.listen(port, ip);

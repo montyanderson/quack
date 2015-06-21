@@ -19,7 +19,9 @@
   "homepage": "https://github.com/montyanderson/quack#readme",
   "dependencies": {
     "express": "^4.12.4",
+    "jquery": "^2.1.4",
     "less": "^2.5.1",
+    "mustache": "^2.1.2",
     "request": "^2.58.0",
     "socket.io": "^1.3.5"
   }
