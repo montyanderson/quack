@@ -1,4 +1,3 @@
-
 $("nav > h1, .landing").each(function() {
     var html = "";
 
