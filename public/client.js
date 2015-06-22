@@ -40,20 +40,20 @@ if(parse("code")) {
         $(".page-main").show();
     });
 
-    var messageTemplate = `
-    <span class="message">
-        <span class="from">{{user}}</span>:
-        {{#greentext}}
-        <span class="greentext">
-        {{/greentext}}
+    /*jshint multistr: true */
 
-        {{text}}
-
-        {{#greentext}}
-        </span>
-        {{/greentext}}
-    </span>
-    `;
+    var messageTemplate = " \
+    <span class='message'>\
+        <span class='from'>{{user}}</span>:\
+        {{#greentext}}\
+        <span class='greentext'>\
+        {{/greentext}}\
+        {{text}}\
+        {{#greentext}}\
+        </span>\
+        {{/greentext}}\
+    </span>\
+    ";
 
     socket.on("message", function(data) {
         if(data.text.substr(0, 1) == ">") {
