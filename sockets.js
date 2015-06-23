@@ -55,4 +55,4 @@ module.exports = function(io, client_id, client_secret) {
         });
 
     });
-}
+};

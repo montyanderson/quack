@@ -63,6 +63,7 @@ if(parse("code")) {
 
         $("#chat").append(Mustache.render(messageTemplate, data));
         $("#chat").scrollTop($("#chat")[0].scrollHeight);
+        new Audio("quack.mp3").play();
     });
 
     socket.on("users", function(users) {
