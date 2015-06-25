@@ -19,22 +19,24 @@ app.staticFile = function(query, path) {
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", function(req, res) {
-    fs.readFile(__dirname + "/public/index.mus", function(err, data) {
+    var started = Date.now();
+
+    fs.readFile(__dirname + "/views/index.mustache", function(err, data) {
         if(!err) {
             res.header("Content-Type", "text/html");
             res.write(Mustache.render(data.toString(), {
                 client_id: client_id,
                 socketsPort: socketsPort,
-                port: port
+                port: port,
+                load_time: Date.now() - started
             }));
 
             res.end();
+        } else {
+            res.end(502);
         }
     });
 });
-
-var server = http.createServer(app);
-var io = socketio(server);
 
 if(fs.existsSync(__dirname + "/.client_id") === true) {
     var client_id = fs.readFileSync(__dirname + "/.client_id").toString().trim();
@@ -47,6 +49,9 @@ if(fs.existsSync(__dirname + "/.client_secret") === true) {
 } else {
     var client_secret = process.env.CLIENT_SECRET;
 }
+
+var server = http.createServer(app);
+var io = socketio(server);
 
 require("./sockets.js")(io, client_id, client_secret);
 

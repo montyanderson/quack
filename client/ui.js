@@ -1,4 +1,6 @@
 module.exports = function() {
+    console.log("Page rendered in " + $("html").data("load-time") + "ms.");
+
     $("nav > h1, .landing").each(function() {
         var html = "";
 
@@ -8,4 +10,4 @@ module.exports = function() {
 
         $(this).html(html);
     });
-}
+};
