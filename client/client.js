@@ -1,4 +1,4 @@
-var client_id = "04c3c180923f43fda166d1ba8dcc2941";
+module.exports = function() {
 
 $(".login").attr("href", "https://api.instagram.com/oauth/authorize/?client_id=" +
 $("html").attr("data-client-id") + "&redirect_uri=" + location.origin + "&response_type=code");
@@ -77,4 +77,6 @@ if(parse("code")) {
             socket.emit("message", text);
         }
     });
+}
+
 }

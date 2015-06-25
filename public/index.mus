@@ -10,7 +10,7 @@
 
         <title>quack</title>
 
-        <link href="style.css" rel="stylesheet" />
+        <link href="bundle.css" rel="stylesheet" />
 
     </head>
     <body>
@@ -36,11 +36,8 @@
             <input class="text" maxlength="50" />
         </section>
 
-        <script src="jquery.js"></script>
-        <script src="mustache.js"></script>
         <script src="socket.io/socket.io.js"></script>
-        <script src="client.js"></script>
-        <script src="ui.js"></script>
+        <script src="bundle.js"></script>
 
     </body>
 </html>

@@ -6,6 +6,8 @@ var fs = require("fs"),
     Mustache = require("mustache"),
     socketio = require("socket.io");
 
+require("./build.js")();
+
 var app = express();
 
 app.staticFile = function(query, path) {
@@ -14,27 +16,10 @@ app.staticFile = function(query, path) {
     });
 };
 
-app.use(express.static("public"));
-
-app.staticFile("/jquery.js", require.resolve("jquery"));
-app.staticFile("/mustache.js", require.resolve("mustache"));
-
-app.get("/style.css", function(req, res) {
-    fs.readFile(__dirname + "/public/style.less", function(err, data) {
-
-        less.render(data.toString()).then(function(output) {
-            res.header("Content-Type", "text/css");
-            res.write(output.css);
-            res.end();
-        }, function(error) {
-            console.log(error);
-        });
-
-    });
-});
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", function(req, res) {
-    fs.readFile("public/index.mus", function(err, data) {
+    fs.readFile(__dirname + "/public/index.mus", function(err, data) {
         if(!err) {
             res.header("Content-Type", "text/html");
             res.write(Mustache.render(data.toString(), {
@@ -51,14 +36,14 @@ app.get("/", function(req, res) {
 var server = http.createServer(app);
 var io = socketio(server);
 
-if(fs.existsSync(".client_id") === true) {
-    var client_id = fs.readFileSync(".client_id").toString().trim();
+if(fs.existsSync(__dirname + "/.client_id") === true) {
+    var client_id = fs.readFileSync(__dirname + "/.client_id").toString().trim();
 } else {
     var client_id = process.env.CLIENT_ID;
 }
 
-if(fs.existsSync(".client_secret") === true) {
-    var client_secret = fs.readFileSync(".client_secret").toString().trim();
+if(fs.existsSync(__dirname + "/.client_secret") === true) {
+    var client_secret = fs.readFileSync(__dirname + "/.client_secret").toString().trim();
 } else {
     var client_secret = process.env.CLIENT_SECRET;
 }
