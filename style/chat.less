@@ -1,0 +1,42 @@
+.page-main {
+    text-align: center;
+
+    h1 {
+        text-align: center;
+        font-size: 4.5vw;
+    }
+
+    h2 {
+        font-size: 3vw;
+    }
+
+    .users:before {
+        content: "Online users: ";
+    }
+
+    #chat {
+        width: 80%;
+        display: inline-block;
+        text-align: left;
+
+        height: 20em;
+        overflow-x: auto;
+        overflow-y: scroll;
+
+        .message {
+            display: block;
+        }
+
+        .from {
+            font-weight: 900;
+        }
+
+        .greentext {
+            color: green;
+        }
+    }
+
+    input {
+        width: 80%;
+    }
+}

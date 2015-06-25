@@ -22,7 +22,7 @@ function parse(val) {
 
 if(parse("code")) {
     var wsURL = location.origin.split(":" + $("html").data("port"))[0] + ":" + $("html").data("socket");
-    var socket = io(wsURL);
+    window.socket = io(wsURL);
 
     socket.emit("code", {
         code: parse("code"),
@@ -34,6 +34,7 @@ if(parse("code")) {
     });
 
     socket.on("login", function(username) {
+        window.username = username;
         $(".username").text(username);
 
         $(".page").hide();
@@ -63,7 +64,10 @@ if(parse("code")) {
 
         $("#chat").append(Mustache.render(messageTemplate, data));
         $("#chat").scrollTop($("#chat")[0].scrollHeight);
-        new Audio("quack.mp3").play();
+
+        if(username && data.username == username) {
+            new Audio("quack.mp3").play();
+        }
     });
 
     socket.on("users", function(users) {
