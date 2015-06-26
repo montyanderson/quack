@@ -10,7 +10,6 @@ function build(next) {
     console.log("Building stylesheets...");
     less.render(fs.readFileSync(__dirname + "/style/main.less").toString()).then(function(output) {
             fs.writeFileSync(__dirname + "/public/bundle.css", output.css);
-            console.log(output);
     }, function(err) {
         console.log(err);
     });

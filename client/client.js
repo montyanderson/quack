@@ -65,7 +65,7 @@ if(parse("code")) {
         $("#chat").append(Mustache.render(messageTemplate, data));
         $("#chat").scrollTop($("#chat")[0].scrollHeight);
 
-        if(username && data.username == username) {
+        if(data.username !== window.username) {
             new Audio("quack.mp3").play();
         }
     });
@@ -83,4 +83,4 @@ if(parse("code")) {
     });
 }
 
-}
+};
