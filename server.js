@@ -6,6 +6,14 @@ var fs = require("fs"),
     Mustache = require("mustache"),
     socketio = require("socket.io");
 
+var build = require("./build.js"),
+    sockets = require("./sockets.js");
+
+var config = {
+    messageLength: 100,
+    roomLength: 25
+};
+
 var app = express();
 
 app.staticFile = function(query, path) {
@@ -26,7 +34,9 @@ app.get("/", function(req, res) {
                 client_id: client_id,
                 socketsPort: socketsPort,
                 port: port,
-                load_time: Date.now() - started
+                load_time: Date.now() - started,
+                messageLength: config.messageLength,
+                roomLength: config.roomLength
             }));
 
             res.end();
@@ -51,7 +61,7 @@ if(fs.existsSync(__dirname + "/.client_secret") === true) {
 var server = http.createServer(app);
 var io = socketio(server);
 
-require("./sockets.js")(io, client_id, client_secret);
+sockets(io, config, client_id, client_secret);
 
 var ip = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_IP || "";
 var port = process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT || process.argv[2] || 8080;
@@ -62,7 +72,7 @@ if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT) {
     var socketsPort = port;
 }
 
-require("./build.js")(function() {
+build(function() {
     console.log("Starting the server...");
     server.listen(port, ip);
 });

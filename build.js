@@ -1,8 +1,8 @@
-function build(next) {
-    var fs = require("fs"),
-        less = require("less"),
-        browserify = require("browserify");
+var fs = require("fs"),
+    less = require("less"),
+    browserify = require("browserify");
 
+module.exports = function(next) {
     console.log("Building client scripts...");
     var JSbundle = fs.createWriteStream(__dirname + "/public/bundle.js");
     browserify().add(__dirname + "/client/index.js").bundle().pipe(JSbundle);
@@ -15,6 +15,4 @@ function build(next) {
     });
 
     next();
-}
-
-module.exports = build;
+};
