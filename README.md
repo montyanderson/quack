@@ -22,5 +22,5 @@ npm install # May need 'sudo' on Linux
 * Run the server
 
 ``` bash
-node server
+npm start
 ```
