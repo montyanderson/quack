@@ -5,8 +5,10 @@
   "description": "quack, the open source messaging system",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "gulp build && node server",
+      "dev": "gulp dev",
+      "prepublish": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -19,12 +21,21 @@
   },
   "homepage": "https://github.com/montyanderson/quack#readme",
   "dependencies": {
-    "browserify": "^10.2.4",
     "express": "^4.12.4",
     "jquery": "^2.1.4",
     "less": "^2.5.1",
     "mustache": "^2.1.2",
     "request": "^2.58.0",
     "socket.io": "^1.3.5"
+  },
+  "devDependencies": {
+    "browserify": "^10.2.4",
+    "gulp": "^3.9.0",
+    "gulp-less": "^3.0.3",
+    "gulp-minify-css": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "^1.2.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

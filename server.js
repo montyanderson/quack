@@ -6,8 +6,7 @@ var fs = require("fs"),
     Mustache = require("mustache"),
     socketio = require("socket.io");
 
-var build = require("./build.js"),
-    sockets = require("./sockets.js");
+var sockets = require("./sockets.js");
 
 var config = {
     messageLength: 100,
@@ -72,7 +71,5 @@ if(process.env.OPENSHIFT_INTERNAL_IP || process.env.OPENSHIFT_NODEJS_PORT) {
     var socketsPort = port;
 }
 
-build(function() {
-    console.log("Starting the server...");
-    server.listen(port, ip);
-});
+console.log("Starting the server...");
+server.listen(port, ip);
