@@ -6,9 +6,9 @@
   "main": "server.js",
   "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "gulp build && node server",
+      "start": "node server",
       "dev": "gulp dev",
-      "prepublish": "gulp build"
+      "prepublish": "./node_modules/.bin/gulp build"
   },
   "repository": {
     "type": "git",

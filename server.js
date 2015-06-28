@@ -1,3 +1,5 @@
+require("./gulpfile.js");
+
 var fs = require("fs"),
     http = require("http"),
     less = require("less"),
